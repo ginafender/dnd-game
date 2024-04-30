@@ -7,6 +7,7 @@ h1 {
     text-align: center;
     color:aliceblue;
     margin-top: 100px;
+    /* text-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
 }
 
 .menu {
@@ -44,15 +45,45 @@ h1 {
     align-items: center;
 }
 
+.container-wrapper {
+    display: flex;
+    text-align: center;
+    flex-direction: column; /* Stack the containers vertically */
+    align-items: center; 
+    margin-top: 100px;
+}
+
 .statBoxContainer {
     background-color: burlywood;
     color: darkslategray;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     border-radius: 20px;
     padding: 20px;
     text-align: center;
     height: 300px;
     width: 400px;
-    position: relative;
-    top: 100px;
-    margin: 0 auto;
+    margin-bottom: 20px; 
+}
+
+.inputContainer {
+    background-color: burlywood;
+    color: darkslategray;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 400px;
+}
+
+#guessInput {
+    width: 300px;
+    height: 25px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: inline-block;
 }
