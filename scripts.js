@@ -20,14 +20,21 @@ async function fetchRandomFeat() {
 }
 
 async function fetchRandomFeature() {
-    const response = await fetch('https://www.dnd5eapi.co/api/classes');
-    const data = await response.json();
-    const randomClass = data.results[Math.floor(Math.random() * data.results.length)];
-    const classResponse = await fetch(`https://www.dnd5eapi.co${randomClass.url}`);
+    const classesResponse = await fetch('https://www.dnd5eapi.co/api/classes');
+    const classesData = await classesResponse.json();
+    const randomClass = classesData.results[Math.floor(Math.random() * classesData.results.length)];
+
+    const classResponse = await fetch(`https://www.dnd5eapi.co${randomClass.url}/features`);
     const classData = await classResponse.json();
-    const randomFeature = classData.features[Math.floor(Math.random() * classData.features.length)];
+
+    // Filter out the features you want to exclude
+    const filteredFeatures = classData.results.filter(feature => feature.name !== "Ability Score Improvement");
+
+    const randomFeature = filteredFeatures[Math.floor(Math.random() * filteredFeatures.length)];
     return randomFeature;
 }
+
+
 
 async function displaySpellDescription(spellData) {
     const spellDescription = spellData.desc[0];
@@ -42,10 +49,14 @@ async function displayFeatDescription(featData) {
 }
 
 async function displayClassDescription(featureData) {
-    const classDescription = featureData.desc[0];
-    document.getElementById('classDescription').innerText = classDescription;
+    const descriptionUrl = `https://www.dnd5eapi.co${featureData.url}`;
+    const descriptionResponse = await fetch(descriptionUrl);
+    const descriptionData = await descriptionResponse.json();
+    const featureDescription = descriptionData.desc[0];
+    document.getElementById('classDescription').innerText = featureDescription;
     localStorage.setItem('correctAnswer', featureData.name);
 }
+
 
 async function displayRandomQuestion() {
     let randomFunction;
@@ -92,6 +103,10 @@ function checkGuess() {
     }
 }
 
+// Listen for click event on the Skip button
+document.getElementById('skipButton').addEventListener('click', function() {
+    moveToNextQuestion(); // Move to the next question
+});
 
 function moveToNextQuestion() {
     // Hide the "Correct!" message
