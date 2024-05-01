@@ -4,9 +4,10 @@ body {
 
 h1 {
     font-family: 'Trebuchet MS', sans-serif;
-    text-align: center;
+    /* text-align: center; */
     color:aliceblue;
     margin-top: 50px;
+    margin-left: 100px;
     /* text-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
 }
 
@@ -15,8 +16,9 @@ h1 {
     position: fixed;
     top: 0;
     right: 0;
-    padding: 20px 20px;
-    margin-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 50px;
     z-index: 1000;
 }
 
@@ -49,9 +51,10 @@ h1 {
 .container-wrapper {
     display: flex;
     text-align: center;
+    font-family: 'Trebuchet MS', sans-serif;
     flex-direction: column; /* Stack the containers vertically */
     align-items: center; 
-    margin-top: 100px;
+    margin-top: 75px;
 }
 
 .spellGuesser {
@@ -136,7 +139,20 @@ h1 {
     cursor: pointer;
 }
 
-
+#endgameContainer {
+    font-family: 'Trebuchet MS', sans-serif;
+    text-align: center;
+    color:aliceblue;
+    margin-top: 0;
+    margin-bottom: 0;
+    display: none;
+}
+#endgameContainer h2 {
+    margin-bottom: 0;
+}
+#endgameContainer h3 {
+    margin-top: 2px;
+}
 
 @keyframes flashJiggleInput {
     0%, 100% { border-color: burlywood; transform: translateX(0); }
@@ -148,5 +164,27 @@ h1 {
     animation: flashJiggleInput 0.5s ease-in-out 4, jiggleInput 0.5s ease-in-out 3 alternate;
 }
 
+.image-container{
+    position: absolute;
+    top: 13%;
+    left: 50%;
+    font-family: 'Trebuchet MS', sans-serif;
+    color: aliceblue;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: flex-end; 
+    justify-content: space-between;
+}
 
+.deathSaves {
+    margin-left: auto;
+    margin-bottom: 0;
+    padding-right: 55px;
+}
 
+#heart1, #heart2, #heart3 {
+    width: 30px;
+    height: 25px;
+    margin-bottom: 0;
+    margin-right: 10px;
+}

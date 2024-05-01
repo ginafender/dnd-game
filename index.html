@@ -18,12 +18,22 @@
     <main>
         <h1>DND GUESS GAME</h1> 
     </main>
-    
+
+    <div class="deathsavesContainer">
+        <div class="image-container">    
+            <h3 class="deathSaves">DEATH SAVES REMAINING:</h3>
+            <img id="heart1" src="images/heart.png" alt="heart1">
+            <img id="heart2" src="images/heart.png" alt="heart2">
+            <img id="heart3" src="images/heart.png" alt="heart3">
+        </div>  
+    </div>
+
+
     <div class="container-wrapper">        
         <div class="spellGuesser">
-            <h2>Spell</h2>
-            <h2>Feat</h2>
-            <h2>Class Feature</h2>
+            <h2>Guess the Spell</h2>
+            <h2>Guess the Feat</h2>
+            <h2>Guess the Class</h2>
             <p id="spellDescription"></p>
             <p id="featDescription"></p>
             <p id="classDescription"></p>
@@ -33,9 +43,11 @@
             <input type="text" id="guessInput" placeholder="Enter your Guess" />
             <button id="skipButton">Skip</button>
         </div>
+        <div id="endgameContainer">
+            <h2>YOU DIED</h2>
+            <h3> You had an intelligence score of: </h3>
+        </div>
     </div>
-
-
 
 	<script src="scripts.js" defer></script>
 </body>
