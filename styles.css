@@ -66,9 +66,21 @@ h1 {
 }
 .spellGuesser p {
     text-align: center;
-    margin-top: 40px;
+    margin-top: 20px;
 }
-.spellGuesser p:last-child{
+.spellGuesser h3 {
+    display: none;
+}
+.spellGuesser h2:first-child {
+    display: block;
+}
+.spellGuesser h2:nth-child(2) {
+    display: none;
+}
+.spellGuesser h2:nth-child(3) {
+    display: none;
+}
+.spellGuesser h2:nth-child(4) {
     display: none;
 }
 
