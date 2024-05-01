@@ -43,6 +43,7 @@ h1 {
     border-radius: 12px;
     background-color: cadetblue;
     align-items: center;
+    cursor: pointer;
 }
 
 .container-wrapper {
@@ -110,6 +111,32 @@ h1 {
 #guessInput:focus{
     outline: none;
 }
+
+#skipButton {
+    background-color: #FFFFFF;
+    border: 1px solid rgb(209,213,219);
+    border-radius: .5rem;
+    color: #111827;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: .875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+    padding: .75rem 1rem;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+#skipButton:hover {
+    color:blueviolet;
+    border: 1px solid rgb(209,213,219);
+    border-radius: .5rem;
+    background-color: cadetblue;
+    align-items: center;
+    cursor: pointer;
+}
+
+
 
 @keyframes flashJiggleInput {
     0%, 100% { border-color: burlywood; transform: translateX(0); }
