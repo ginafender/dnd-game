@@ -69,8 +69,9 @@ function checkGuess() {
 let gameEnded = false;
 function endGame (){
     gameEnded = true;
-    died = document.getElementById('endgameContainer');
-    died.style.display = 'block';
+    document.getElementById('endgameContainer').style.display = 'block';
+    document.querySelector('.spellGuesser h2').style.display = 'none';
+    document.getElementById('spellDescription').style.display = 'none';
 }
 
 
