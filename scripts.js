@@ -1,5 +1,3 @@
-// Define an array to hold the different question types
-let currentQuestionIndex = 0;
 let correctGuesses = 0;
 let incorrectGuesses = 0;
 
@@ -12,122 +10,58 @@ async function fetchRandomSpell() {
     return spellData;
 }
 
-async function fetchRandomFeat() {
-    const response = await fetch('https://www.dnd5eapi.co/api/feats');
-    const data = await response.json();
-
-    // Filter out ability score improvements
-    const filteredFeats = data.results.filter(feat => feat.name !== "Ability Score Improvement");
-    const randomFeat = filteredFeats[Math.floor(Math.random() * filteredFeats.length)];
-    const featResponse = await fetch(`https://www.dnd5eapi.co${randomFeat.url}`);
-    const featData = await featResponse.json();
-    return featData;
-}
-
-async function fetchRandomFeature() {
-    const response = await fetch('https://www.dnd5eapi.co/api/features');
-    const data = await response.json();
-
-    // Filter out ability score improvements
-    const filteredFeatures = data.results.filter(feature => feature.name !== "Ability Score Improvement");
-    const randomFeature = filteredFeatures[Math.floor(Math.random() * filteredFeatures.length)];
-    const featureResponse = await fetch(`https://www.dnd5eapi.co${randomFeature.url}`);
-    const featureData = await featureResponse.json();
-    return featureData;
-}
-
-
-
-
 async function displaySpellDescription(spellData) {
     const spellDescription = spellData.desc[0];
     document.getElementById('spellDescription').innerText = spellDescription;
     localStorage.setItem('correctAnswer', spellData.name);
 
-    console.log('Correct answer: ', spellData.name)
-}
-
-async function displayFeatDescription(featData) {
-    const featDescription = featData.desc.join('\n'); // Concatenate all lines in the 'desc' array
-    document.getElementById('featDescription').innerText = featDescription;
-    localStorage.setItem('correctAnswer', featData.name);
-
-    console.log('Correct answer: ', featData.name);
-}
-
-
-async function displayClassDescription(featureData) {
-    const featureDescription = featureData.desc.join('\n'); // Concatenate all lines in the 'desc' array
-    document.getElementById('classDescription').innerText = featureDescription;
-    localStorage.setItem('correctAnswer', featureData.class.name);
-
-    console.log('Correct answer: ', featureData.class.name);
+    console.log('Data: ', spellDescription);
+    console.log('Correct answer: ', spellData.name);
 }
 
 async function displayRandomQuestion() {
-    let randomFunction;
-    let displayFunction;
-
     if (gameEnded) {
         return; // Do nothing if the game has ended
     }
 
-
-    switch (currentQuestionIndex) {
-        case 0:
-            randomFunction = fetchRandomSpell;
-            displayFunction = displaySpellDescription;
-            break;
-        case 1:
-            randomFunction = fetchRandomFeat;
-            displayFunction = displayFeatDescription;
-            break;
-        case 2:
-            randomFunction = fetchRandomFeature;
-            displayFunction = displayClassDescription;
-            break;
-        default:
-            console.error('Invalid question type');
-            return;
-    }
-
-    const questionData = await randomFunction();
-    await displayFunction(questionData);
+    const questionData = await fetchRandomSpell();
+    await displaySpellDescription(questionData);
 }
+
+
+let remainingHearts = 3; // Initialize with the maximum number of hearts
 
 function checkGuess() {
     const guessInput = document.getElementById('guessInput');
     const guess = guessInput.value.trim().toLowerCase().replace(/'/g, ''); 
     const correctAnswer = localStorage.getItem('correctAnswer').toLowerCase().replace(/'/g, ''); 
+    const heartImages = document.querySelectorAll('#heart1, #heart2, #heart3');
 
     if (guess === correctAnswer) {
-        const correctMessage = document.querySelector('.spellGuesser h3');
-        correctMessage.style.display = 'block'; // Show the correct message
         document.getElementById('spellDescription').style.display = 'none'; // Hide the question
-        correctGuesses++;
-        // moveToNextQuestion(); // Move to the next question
+        moveToNextQuestion();
+        // If the player has at least 1 heart, continue playing
+        if (remainingHearts < 3) {
+            remainingHearts++; // Increment the remaining hearts count
+            // Update the display of heart images
+            heartImages[remainingHearts - 1].style.display = 'block';
+        }
     } else {
         guessInput.classList.add('flash-jiggle'); // Add class to trigger flash and jiggle animations
         setTimeout(() => {
             guessInput.classList.remove('flash-jiggle'); // Remove class after animation completes
         }, 500); 
 
-        incorrectGuesses++;
-        // Remove one heart image from display
-        const heartImages = document.querySelectorAll('#heart1, #heart2, #heart3');
-        heartImages[incorrectGuesses - 1].style.display = 'none';
-
-        // Check if incorrectGuesses counter reaches 3
-        if (incorrectGuesses === 3) {
-            endGame();
-            return;
+        // If the player has at least 1 heart, then remove one heart
+        if (remainingHearts > 0) {
+            remainingHearts--; // Decrement the remaining hearts count
+            heartImages[remainingHearts].style.display = 'none'; // Update the display of heart images
         }
-    }
 
-    // Check if it's the third question, then end the game
-    if (currentQuestionIndex === 2) {
-        endGame();
-        return;
+        // If the player has no hearts left, end the game
+        if (remainingHearts === 0) {
+            endGame();
+        }
     }
 }
 
@@ -140,11 +74,11 @@ function endGame (){
 }
 
 
-// // Listen for click event on the Skip button
-// document.getElementById('skipButton').addEventListener('click', function() {
-//         checkGuess(); // Check the guess (which will also handle heart removal)
-//         moveToNextQuestion(); // Move to the next question
-// });
+// Listen for click event on the Skip button
+document.getElementById('skipButton').addEventListener('click', function() {
+        checkGuess(); // Check the guess (which will also handle heart removal)
+        moveToNextQuestion(); // Move to the next question
+});
 
 function moveToNextQuestion() {
     // Hide the "Correct!" message
@@ -158,24 +92,11 @@ function moveToNextQuestion() {
     // Clear any previous question descriptions
     const spellDescription = document.getElementById('spellDescription');
     spellDescription.innerText = '';
-
-    const featDescription = document.getElementById('featDescription');
-    featDescription.innerText = '';
-
-    const classDescription = document.getElementById('classDescription');
-    classDescription.innerText = '';
-
-    // Reset the current question index if it's the third question
-    if (currentQuestionIndex === 2) {
-        currentQuestionIndex = 0;
-    } else {
-        currentQuestionIndex++; // Move to the next question index
-    }
+    spellDescription.style.display = 'block';
 
     // Display a random question from the next question type
     displayRandomQuestion();
 }
-
 
 
 // Listen for "keypress" event on the input element
