@@ -105,7 +105,7 @@ function checkGuess() {
         correctMessage.style.display = 'block'; // Show the correct message
         document.getElementById('spellDescription').style.display = 'none'; // Hide the question
         correctGuesses++;
-        moveToNextQuestion(); // Move to the next question
+        // moveToNextQuestion(); // Move to the next question
     } else {
         guessInput.classList.add('flash-jiggle'); // Add class to trigger flash and jiggle animations
         setTimeout(() => {
@@ -140,11 +140,11 @@ function endGame (){
 }
 
 
-// Listen for click event on the Skip button
-document.getElementById('skipButton').addEventListener('click', function() {
-        checkGuess(); // Check the guess (which will also handle heart removal)
-        moveToNextQuestion(); // Move to the next question
-});
+// // Listen for click event on the Skip button
+// document.getElementById('skipButton').addEventListener('click', function() {
+//         checkGuess(); // Check the guess (which will also handle heart removal)
+//         moveToNextQuestion(); // Move to the next question
+// });
 
 function moveToNextQuestion() {
     // Hide the "Correct!" message
