@@ -13,7 +13,7 @@ async function fetchRandomSpell() {
 }
 
 async function fetchRandomFeat() {
-    const response = await fetch('https://www.dnd5eapi.co/api/features');
+    const response = await fetch('https://www.dnd5eapi.co/api/feats');
     const data = await response.json();
 
     // Filter out ability score improvements
@@ -24,21 +24,18 @@ async function fetchRandomFeat() {
     return featData;
 }
 
-
 async function fetchRandomFeature() {
-    const classesResponse = await fetch('https://www.dnd5eapi.co/api/classes');
-    const classesData = await classesResponse.json();
-    const randomClass = classesData.results[Math.floor(Math.random() * classesData.results.length)];
-
-    const classResponse = await fetch(`https://www.dnd5eapi.co${randomClass.url}/features`);
-    const classData = await classResponse.json();
+    const response = await fetch('https://www.dnd5eapi.co/api/features');
+    const data = await response.json();
 
     // Filter out ability score improvements
-    const filteredFeatures = classData.results.filter(feature => feature.name !== "Ability Score Improvement");
-
+    const filteredFeatures = data.results.filter(feature => feature.name !== "Ability Score Improvement");
     const randomFeature = filteredFeatures[Math.floor(Math.random() * filteredFeatures.length)];
-    return randomFeature;
+    const featureResponse = await fetch(`https://www.dnd5eapi.co${randomFeature.url}`);
+    const featureData = await featureResponse.json();
+    return featureData;
 }
+
 
 
 
@@ -51,28 +48,30 @@ async function displaySpellDescription(spellData) {
 }
 
 async function displayFeatDescription(featData) {
-    const featDescription = featData.desc[0];
+    const featDescription = featData.desc.join('\n'); // Concatenate all lines in the 'desc' array
     document.getElementById('featDescription').innerText = featDescription;
     localStorage.setItem('correctAnswer', featData.name);
 
-    console.log('Correct answer: ', featData.name)
+    console.log('Correct answer: ', featData.name);
 }
+
 
 async function displayClassDescription(featureData) {
-    const descriptionUrl = `https://www.dnd5eapi.co${featureData.url}`;
-    const descriptionResponse = await fetch(descriptionUrl);
-    const descriptionData = await descriptionResponse.json();
-    const featureDescription = descriptionData.desc[0];
+    const featureDescription = featureData.desc.join('\n'); // Concatenate all lines in the 'desc' array
     document.getElementById('classDescription').innerText = featureDescription;
-    localStorage.setItem('correctAnswer', featureData.name);
+    localStorage.setItem('correctAnswer', featureData.class.name);
 
-    console.log('Correct answer: ', featureData.name)
+    console.log('Correct answer: ', featureData.class.name);
 }
-
 
 async function displayRandomQuestion() {
     let randomFunction;
     let displayFunction;
+
+    if (gameEnded) {
+        return; // Do nothing if the game has ended
+    }
+
 
     switch (currentQuestionIndex) {
         case 0:
@@ -106,6 +105,7 @@ function checkGuess() {
         correctMessage.style.display = 'block'; // Show the correct message
         document.getElementById('spellDescription').style.display = 'none'; // Hide the question
         correctGuesses++;
+        moveToNextQuestion(); // Move to the next question
     } else {
         guessInput.classList.add('flash-jiggle'); // Add class to trigger flash and jiggle animations
         setTimeout(() => {
@@ -129,50 +129,52 @@ function checkGuess() {
         endGame();
         return;
     }
-
-    moveToNextQuestion(); // Move to the next question
 }
 
 
+let gameEnded = false;
 function endGame (){
+    gameEnded = true;
     died = document.getElementById('endgameContainer');
     died.style.display = 'block';
 }
 
+
 // Listen for click event on the Skip button
 document.getElementById('skipButton').addEventListener('click', function() {
-    checkGuess(); // Check the guess (which will also handle heart removal)
-    moveToNextQuestion(); // Move to the next question
+        checkGuess(); // Check the guess (which will also handle heart removal)
+        moveToNextQuestion(); // Move to the next question
 });
-
-
 
 function moveToNextQuestion() {
     // Hide the "Correct!" message
     const correctMessage = document.querySelector('.spellGuesser h3');
     correctMessage.style.display = 'none';
 
-    currentQuestionIndex = (currentQuestionIndex + 1) % 3; // Ensure it cycles through 0, 1, 2
-    const h2Elements = document.querySelectorAll('.spellGuesser h2');
-    h2Elements.forEach((h2, index) => {
-        if (index === currentQuestionIndex) {
-            h2.style.display = 'block';
-        } else {
-            h2.style.display = 'none';
-        }
-    });
+    // Clear the input field
     const guessInput = document.getElementById('guessInput');
-    guessInput.value = ''; // Clear the input box
+    guessInput.value = ''; 
 
-    // Check if it's the third question, then end the game
-    if (currentQuestionIndex === 3) {
-        endGame();
-        return;
+    // Clear any previous question descriptions
+    const spellDescription = document.getElementById('spellDescription');
+    spellDescription.innerText = '';
+
+    const featDescription = document.getElementById('featDescription');
+    featDescription.innerText = '';
+
+    const classDescription = document.getElementById('classDescription');
+    classDescription.innerText = '';
+
+    // Reset the current question index if it's the third question
+    if (currentQuestionIndex === 2) {
+        currentQuestionIndex = 0;
+    } else {
+        currentQuestionIndex++; // Move to the next question index
     }
 
-    displayRandomQuestion(); // Display a random question from the next question type
+    // Display a random question from the next question type
+    displayRandomQuestion();
 }
-
 
 
 
