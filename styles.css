@@ -19,6 +19,7 @@ h1 {
     padding-left: 20px;
     padding-right: 20px;
     margin-top: 50px;
+    margin-right: 50px;
     z-index: 1000;
 }
 
@@ -26,27 +27,92 @@ h1 {
     display: flex;
 }
 
-.menu a {
+.menu button {
     font-family: 'Trebuchet MS', sans-serif;
     font-size: large;
     text-align: center;
     text-decoration: none;
-    color:aliceblue;
+    background-color: transparent;
+    border: none;
+    color: aliceblue;
     padding: 10px 20px;
 }
 
-.menu a:visited{
-    color:aliceblue;
-}
-
-.menu a:hover{
-    color:blueviolet;
+.menu button:hover {
+    color: blueviolet;
     padding: 10px 20px;
     border-radius: 12px;
     background-color: cadetblue;
     align-items: center;
     cursor: pointer;
 }
+
+.popup {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none;
+}
+
+.popup-content {
+    position: relative;
+    background-color:antiquewhite;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: large;
+    text-align: center;
+    color:darkslategray;
+    text-decoration: none;
+    margin: 10% auto;
+    padding: 20px;
+    width: 60%;
+    max-width: 600px;
+    border-radius: 8px;
+}
+
+.popup-content h2 {
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: large;
+    text-align: center;
+    text-decoration: none;
+    color: darkslategray;
+}
+
+.close {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    color: darkslategray;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.show {
+    display: block;
+}
+
+#xlogo {
+    width: 70px;
+    height: auto;
+}
+
+ul, ol {
+    margin: 0;
+    padding: 0;
+}
+
+ul, ol {
+    list-style-position: inside;
+}
+
+li {
+    padding: 5px 0;
+}
+
 
 .container-wrapper {
     display: flex;
@@ -190,29 +256,5 @@ h1 {
     margin-right: 10px;
 }
 
-/* .countContainerWrapper {
-    font-family: 'Trebuchet MS', sans-serif;
-    text-align: center;
-    color: aliceblue;
-    text-shadow: #111827 0 1px;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 0;
-    z-index: 0;
-}
 
-.countContainer, .remainingContainer {
-    flex: 1; /* Distribute space evenly between the containers */
-    /* display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 50px; 
-    margin-top: 0;
-} */
-
-/* #correct, #remaining {
-    padding: 8px;
-} */
 

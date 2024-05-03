@@ -1,7 +1,9 @@
 let correctGuesses = 0;
 let incorrectGuesses = 0;
+let right = 0;
+let wrong = 0;
 let totalQuestions = 0;
-let maxQuestions = 6;
+let maxQuestions = 10;
 let gameEnded = false;
 
 async function fetchRandomSpell() {
@@ -24,7 +26,7 @@ async function displaySpellDescription(spellData) {
 
 async function displayRandomQuestion() {
     totalQuestions++
-    console.log('Total Questions: ', totalQuestions);
+    // console.log('Total Questions: ', totalQuestions);
     if (gameEnded || totalQuestions >= maxQuestions) {
         console.log('Game ended or reached max questions');
         return; // Do nothing if the game has ended
@@ -48,18 +50,22 @@ function checkGuess() {
 
     if (guess === correctAnswer) {
         correctGuesses++;
-        console.log('Correct count: ', correctGuesses);
+        right++
+        // console.log('Correct count: ', correctGuesses);
         document.getElementById('spellDescription').style.display = 'none'; // Hide the question
         moveToNextQuestion();
         // If the player has at least 1 heart, continue playing
-        if (remainingHearts < 3) {
+        if (remainingHearts < 3 && correctGuesses >= 2) {
             remainingHearts++; // Increment the remaining hearts count
             // Update the display of heart images
+            correctGuesses = 0;
             heartImages[remainingHearts - 1].style.display = 'block';
         }
     } else {
         incorrectGuesses++;
-        console.log('Wrong count: ', incorrectGuesses);
+        correctGuesses = 0;
+        wrong++;
+        // console.log('Wrong count: ', incorrectGuesses);
         guessInput.classList.add('flash-jiggle'); // Add class to trigger flash and jiggle animations
         setTimeout(() => {
             guessInput.classList.remove('flash-jiggle'); // Remove class after animation completes
@@ -135,6 +141,41 @@ document.getElementById('guessInput').addEventListener('keypress', function(even
 
 // Call displayRandomQuestion when the page loads
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Max Questions:', maxQuestions); 
+    // console.log('Max Questions:', maxQuestions); 
     displayRandomQuestion();
+});
+
+
+// BUTTONS
+var aboutBtn = document.getElementById("aboutBtn");
+var settingsBtn = document.getElementById("settingsBtn");
+var htpBtn = document.getElementById("htpBtn");
+
+var aboutPopup = document.getElementById("aboutPopup");
+var settingsPopup = document.getElementById("settingsPopup");
+var htpPopup = document.getElementById("htpPopup");
+
+var closeBtns = document.querySelectorAll(".close");
+
+function togglePopup(popup) {
+    popup.classList.toggle("show");
+}
+
+aboutBtn.addEventListener("click", function() {
+    togglePopup(aboutPopup);
+});
+
+settingsBtn.addEventListener("click", function() {
+    togglePopup(settingsPopup);
+});
+
+htpBtn.addEventListener("click", function() {
+    togglePopup(htpPopup);
+});
+
+closeBtns.forEach(function(btn) {
+    btn.addEventListener("click", function() {
+        var popup = btn.parentElement.parentElement;
+        togglePopup(popup);
+    });
 });
