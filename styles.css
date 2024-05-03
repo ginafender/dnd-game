@@ -91,6 +91,7 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 0;
     height: 50px;
     width: 400px;
 }
@@ -135,22 +136,22 @@ h1 {
 #endgameContainer {
     font-family: 'Trebuchet MS', sans-serif;
     text-align: center;
-    color: aliceblue;
-    text-shadow: #111827 0 1px;
+    color: darkslategray;
     margin-top: 0;
     margin-bottom: 0;
     display: none;
     position: absolute;
-    top: 50%;
+    top: 30%;
     left: 50%; 
     transform: translate(-50%, -50%); 
     z-index: 1; 
 }
 
-#endgameContainer h2 {
-    margin-bottom: 0;
+#died, #maxq {
+    display: none;;
 }
-#endgameContainer h3 {
+#died h3, #maxq h3 {
+    margin-bottom: 0;
     margin-top: 2px;
 }
 
@@ -188,3 +189,30 @@ h1 {
     margin-bottom: 0;
     margin-right: 10px;
 }
+
+/* .countContainerWrapper {
+    font-family: 'Trebuchet MS', sans-serif;
+    text-align: center;
+    color: aliceblue;
+    text-shadow: #111827 0 1px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0;
+    z-index: 0;
+}
+
+.countContainer, .remainingContainer {
+    flex: 1; /* Distribute space evenly between the containers */
+    /* display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 50px; 
+    margin-top: 0;
+} */
+
+/* #correct, #remaining {
+    padding: 8px;
+} */
+
