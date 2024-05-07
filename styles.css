@@ -96,7 +96,19 @@ h1 {
 }
 
 #xlogo {
-    width: 70px;
+    width: 40px;
+    height: auto;
+}
+#discordlogo {
+    width: 50px;
+    height: auto;
+}
+#patreonlogo {
+    width: 40px;
+    height: auto;
+}
+#beaconslogo {
+    width: 40px;
     height: auto;
 }
 
