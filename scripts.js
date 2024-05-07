@@ -2,8 +2,9 @@ let correctGuesses = 0;
 let incorrectGuesses = 0;
 let right = 0;
 let wrong = 0;
+let skips = 0;
 let totalQuestions = 0;
-let maxQuestions = 10;
+let maxQuestions = 11;
 let gameEnded = false;
 
 async function fetchRandomSpell() {
@@ -26,9 +27,10 @@ async function displaySpellDescription(spellData) {
 
 async function displayRandomQuestion() {
     totalQuestions++
-    // console.log('Total Questions: ', totalQuestions);
+    console.log('Total Questions: ', totalQuestions);
     if (gameEnded || totalQuestions >= maxQuestions) {
-        console.log('Game ended or reached max questions');
+        // console.log('Game ended or reached max questions');
+        endGame(totalQuestions >= maxQuestions ? 'maxQuestions' : 'outOfHearts');
         return; // Do nothing if the game has ended
     }
 
@@ -45,8 +47,8 @@ function checkGuess() {
     const correctAnswer = localStorage.getItem('correctAnswer').toLowerCase().replace(/'/g, '').trim();
     const heartImages = document.querySelectorAll('#heart1, #heart2, #heart3');
 
-    console.log('Guess:', guess);
-    console.log('Correct Answer:', correctAnswer);
+    // console.log('Guess:', guess);
+    // console.log('Correct Answer:', correctAnswer);
 
     if (guess === correctAnswer) {
         correctGuesses++;
@@ -87,6 +89,7 @@ function checkGuess() {
 
 // Function to end the game
 function endGame(reason) {
+    calculator();
     gameEnded = true;
     document.querySelector('.spellGuesser h2').style.display = 'none';
     document.getElementById('spellDescription').style.display = 'none';
@@ -107,6 +110,7 @@ function endGame(reason) {
 
 // Listen for click event on the Skip button
 document.getElementById('skipButton').addEventListener('click', function() {
+    skips++
     checkGuess(); // Check the guess (which will also handle heart removal)
     moveToNextQuestion(); // Move to the next question
 });
@@ -145,6 +149,21 @@ document.addEventListener('DOMContentLoaded', function() {
     displayRandomQuestion();
 });
 
+let calcValue = 0;
+
+function calculator() {
+    console.log('Right count: ', right);
+    console.log('Wrong count: ', wrong);
+    console.log('Skip count: ', skips);
+
+    if (right > wrong) {
+        calcValue = '10';
+    } else {
+        calcValue = '0';
+    }
+
+    document.getElementById('calculator').innerText = calcValue;
+}
 
 // BUTTONS
 var aboutBtn = document.getElementById("aboutBtn");
@@ -165,9 +184,9 @@ aboutBtn.addEventListener("click", function() {
     togglePopup(aboutPopup);
 });
 
-settingsBtn.addEventListener("click", function() {
-    togglePopup(settingsPopup);
-});
+// settingsBtn.addEventListener("click", function() {
+//     togglePopup(settingsPopup);
+// });
 
 htpBtn.addEventListener("click", function() {
     togglePopup(htpPopup);
