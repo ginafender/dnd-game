@@ -228,9 +228,10 @@ li {
 #died, #maxq {
     display: none;;
 }
-#died h3, #maxq h3 {
+.score-container {
     margin-bottom: 0;
     margin-top: 2px;
+    display: none;
 }
 
 @keyframes flashJiggleInput {

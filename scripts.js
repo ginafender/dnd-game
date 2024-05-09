@@ -41,14 +41,29 @@ async function displayRandomQuestion() {
 
 let remainingHearts = 3; // Initialize with the maximum number of hearts
 
+function updateHeartDisplay() {
+    const heartImages = document.querySelectorAll('#heart1, #heart2, #heart3');
+    heartImages.forEach((image, index) => {
+        if (index < remainingHearts) {
+            image.style.display = 'block'; 
+            // console.log(`Heart ${index + 1} displayed`);
+        } else {
+            image.style.display = 'none'; 
+            // console.log(`Heart ${index + 1} hidden`);
+        }
+    });
+}
+
+
+
 function checkGuess() {
     const guessInput = document.getElementById('guessInput');
     const guess = guessInput.value.trim().toLowerCase().replace(/'/g, ''); 
     const correctAnswer = localStorage.getItem('correctAnswer').toLowerCase().replace(/'/g, '').trim();
-    const heartImages = document.querySelectorAll('#heart1, #heart2, #heart3');
 
     // console.log('Guess:', guess);
     // console.log('Correct Answer:', correctAnswer);
+    console.log('Remaining Hearts: ', remainingHearts);
 
     if (guess === correctAnswer) {
         correctGuesses++;
@@ -61,7 +76,7 @@ function checkGuess() {
             remainingHearts++; // Increment the remaining hearts count
             // Update the display of heart images
             correctGuesses = 0;
-            heartImages[remainingHearts - 1].style.display = 'block';
+            updateHeartDisplay(); // Update heart display
         }
     } else {
         incorrectGuesses++;
@@ -76,7 +91,8 @@ function checkGuess() {
         // If the player has at least 1 heart, then remove one heart
         if (remainingHearts > 0) {
             remainingHearts--;
-            heartImages[remainingHearts].style.display = 'none'; 
+            console.log('Updated remainingHearts:', remainingHearts);
+            updateHeartDisplay(); // Update heart display
         }
 
         if (remainingHearts === 0 ) {
@@ -87,25 +103,42 @@ function checkGuess() {
 
 
 
-// Function to end the game
+
+
 function endGame(reason) {
-    calculator();
+    console.log('Right count: ', right);
+
     gameEnded = true;
     document.querySelector('.spellGuesser h2').style.display = 'none';
     document.getElementById('spellDescription').style.display = 'none';
     document.getElementById('endgameContainer').style.display = 'block';
 
-    // Check the reason for ending the game and display appropriate message
     console.log('Reason for game ending: ', reason);
     if (reason === 'outOfHearts') {
-        // Display message for losing due to running out of hearts
         document.getElementById('died').style.display ='block';
+        document.getElementById('scoreNine').style.display ='block'; // Show scoreNine
     } else {
-        // Display message for reaching the maximum number of questions
         console.log('Displaying maxQuestions message');
         document.getElementById('maxq').style.display ='block';
+        if (right === 10) {
+            document.getElementById('scoreTwenty-six').style.display = 'block';
+        }
+    }
+
+    // Show the intelligence score message corresponding to the number of wrong guesses
+    if (wrong === 1) {
+        document.getElementById('scoreEighteen').style.display = 'block';
+    } else if (wrong === 2) {
+        document.getElementById('scoreSixteen').style.display = 'block';
+    } else if (wrong === 3) {
+        document.getElementById('scoreFourteen').style.display = 'block';
+    } else if (wrong === 4) {
+        document.getElementById('scoreTwelve').style.display = 'block';
     }
 }
+
+
+
 
 
 // Listen for click event on the Skip button
@@ -147,23 +180,9 @@ document.getElementById('guessInput').addEventListener('keypress', function(even
 document.addEventListener('DOMContentLoaded', function() {
     // console.log('Max Questions:', maxQuestions); 
     displayRandomQuestion();
+    updateHeartDisplay();
 });
 
-let calcValue = 0;
-
-function calculator() {
-    console.log('Right count: ', right);
-    console.log('Wrong count: ', wrong);
-    console.log('Skip count: ', skips);
-
-    if (right > wrong) {
-        calcValue = '10';
-    } else {
-        calcValue = '0';
-    }
-
-    document.getElementById('calculator').innerText = calcValue;
-}
 
 // BUTTONS
 var aboutBtn = document.getElementById("aboutBtn");
