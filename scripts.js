@@ -5,6 +5,7 @@ let wrong = 0;
 let skips = 0;
 let totalQuestions = 0;
 let maxQuestions = 11;
+let askedQuestions = [];
 let gameEnded = false;
 
 async function fetchRandomSpell() {
@@ -27,14 +28,25 @@ async function displaySpellDescription(spellData) {
 
 async function displayRandomQuestion() {
     totalQuestions++
-    console.log('Total Questions: ', totalQuestions);
+    // console.log('Total Questions: ', totalQuestions);
     if (gameEnded || totalQuestions >= maxQuestions) {
         // console.log('Game ended or reached max questions');
         endGame(totalQuestions >= maxQuestions ? 'maxQuestions' : 'outOfHearts');
-        return; // Do nothing if the game has ended
+        return;
     }
 
-    const questionData = await fetchRandomSpell();
+    let questionData;
+    let questionAlreadyAsked = true;
+
+    // Keep fetching random questions until finding one that hasn't been asked before
+    while (questionAlreadyAsked) {
+        questionData = await fetchRandomSpell();
+        if (!askedQuestions.includes(questionData.name)) {
+            questionAlreadyAsked = false;
+            askedQuestions.push(questionData.name); // Add the question to the list of asked questions
+        }
+    }
+
     await displaySpellDescription(questionData);
 }
 
@@ -60,19 +72,23 @@ function checkGuess() {
     const guessInput = document.getElementById('guessInput');
     const guess = guessInput.value.trim().toLowerCase().replace(/'/g, ''); 
     const correctAnswer = localStorage.getItem('correctAnswer').toLowerCase().replace(/'/g, '').trim();
+    const correctMessage = document.getElementById('correctMessage');
 
     // console.log('Guess:', guess);
     // console.log('Correct Answer:', correctAnswer);
-    console.log('Remaining Hearts: ', remainingHearts);
+    // console.log('Remaining Hearts: ', remainingHearts);
 
     if (guess === correctAnswer) {
         correctGuesses++;
         right++
+        correctMessage.style.display = 'block';
         // console.log('Correct count: ', correctGuesses);
-        document.getElementById('spellDescription').style.display = 'none'; // Hide the question
-        moveToNextQuestion();
+        setTimeout(() => {
+            moveToNextQuestion(); //delay before next question
+        }, 1500); 
+        
         // If the player has at least 1 heart, continue playing
-        if (remainingHearts < 3 && correctGuesses >= 2) {
+        if (remainingHearts < 3) {
             remainingHearts++; // Increment the remaining hearts count
             // Update the display of heart images
             correctGuesses = 0;
@@ -91,7 +107,7 @@ function checkGuess() {
         // If the player has at least 1 heart, then remove one heart
         if (remainingHearts > 0) {
             remainingHearts--;
-            console.log('Updated remainingHearts:', remainingHearts);
+            // console.log('Updated remainingHearts:', remainingHearts);
             updateHeartDisplay(); // Update heart display
         }
 
@@ -106,17 +122,20 @@ function checkGuess() {
 
 
 function endGame(reason) {
-    console.log('Right count: ', right);
+    // console.log('Right count: ', right);
 
     gameEnded = true;
-    document.querySelector('.spellGuesser h2').style.display = 'none';
-    document.getElementById('spellDescription').style.display = 'none';
-    document.getElementById('endgameContainer').style.display = 'block';
+    setTimeout(() => {
+        document.querySelector('.spellGuesser h2').style.display = 'none';
+        document.getElementById('spellDescription').style.display = 'none';
+        document.getElementById('endgameContainer').style.display = 'block';
+    }, 1500);
+
 
     console.log('Reason for game ending: ', reason);
     if (reason === 'outOfHearts') {
         document.getElementById('died').style.display ='block';
-        document.getElementById('scoreNine').style.display ='block'; // Show scoreNine
+        document.getElementById('scoreNine').style.display ='block'; 
     } else {
         console.log('Displaying maxQuestions message');
         document.getElementById('maxq').style.display ='block';
@@ -126,14 +145,18 @@ function endGame(reason) {
     }
 
     // Show the intelligence score message corresponding to the number of wrong guesses
-    if (wrong === 1) {
+    if (right === 9) {
+        document.getElementById('scoreTwenty').style.display = 'block';
+    } else if (right === 8) {
         document.getElementById('scoreEighteen').style.display = 'block';
-    } else if (wrong === 2) {
+    } else if (right === 7) {
         document.getElementById('scoreSixteen').style.display = 'block';
-    } else if (wrong === 3) {
+    } else if (right === 6) {
         document.getElementById('scoreFourteen').style.display = 'block';
-    } else if (wrong === 4) {
+    } else if (right === 5) {
         document.getElementById('scoreTwelve').style.display = 'block';
+    } else if (right === 4) {
+        document.getElementById('scoreTen').style.display = 'block';
     }
 }
 
@@ -141,11 +164,22 @@ function endGame(reason) {
 
 
 
+
 // Listen for click event on the Skip button
 document.getElementById('skipButton').addEventListener('click', function() {
-    skips++
-    checkGuess(); // Check the guess (which will also handle heart removal)
-    moveToNextQuestion(); // Move to the next question
+    if (!gameEnded) {
+        skips++
+        checkGuess(); 
+        // display correct answer before moving on
+        const displayAnswer = document.getElementById('displayAnswer');
+        const correctAnswer = localStorage.getItem('correctAnswer');
+        displayAnswer.innerText = correctAnswer;
+        displayAnswer.style.display = 'block';
+
+        setTimeout(() => {
+            moveToNextQuestion(); //delay before next question
+        }, 1500); 
+    }
 });
 
 
@@ -162,6 +196,9 @@ function moveToNextQuestion() {
     const spellDescription = document.getElementById('spellDescription');
     spellDescription.innerText = '';
     spellDescription.style.display = 'block';
+
+    //clear previous correct answer display
+    document.getElementById('displayAnswer').style.display = 'none';
 
     // Display a random question from the next question type
     displayRandomQuestion();

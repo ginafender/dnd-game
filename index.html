@@ -41,9 +41,9 @@
                 <span class="close">&times;</span>
                 <h2>HOW TO PLAY</h2>
                 <ul>
-                    <li>Read the Spell descrption and enter your guess in the line below.</li>
-                    <li>Each incorrect guess results in one failed Death Save, and you must get two correct answers to earn one back.</li>
-                    <li>If you are stumped, feel free to use the skip button.....at your own risk!</li>
+                    <li>Read the Spell description and enter your guess in the line below.</li>
+                    <li>Each incorrect guess results in one failed Death Save, and you must get one correct answer to earn one back.</li>
+                    <li>If you are stumped, feel free to use the skip button.....or don't. Make your choice at your own risk!</li>
                 </ul>
             </div>
         </div>
@@ -66,7 +66,8 @@
         <div class="spellGuesser">
             <h2>Guess the Spell</h2>
             <p id="spellDescription"></p>
-            <h3>Correct!</h3>
+            <h3 id="correctMessage">Correct!</h3>
+            <h3 id="displayAnswer"></h3>
         </div>
         <div class="inputContainer">
             <input type="text" id="guessInput" placeholder="Enter your Guess" />
@@ -81,27 +82,35 @@
             </div>
             <div id="scoreNine" class="score-container">
                 <h3>You had an intelligence score of:</br>9 (-1)</h3>
-                <p>Maybe stick to combat!</p>
+                <p>Who needs to know stuff when you can just hit things?</p>
+            </div>
+            <div id="scoreTen" class="score-container">
+                <h3>You had an intelligence score of:</br>10 (+0)</h3>
+                <p>A little slow on the uptake, but you'll get there!</p>
             </div>
             <div id="scoreTwelve" class="score-container">
                 <h3>You have an intelligence score of:</br>12 (+1)</h3>
-                <p>Maybe stick to combat!</p>
+                <p>Looks like you've got the basics down... almost.</p>
             </div>
             <div id="scoreFourteen" class="score-container">
                 <h3>You have an intelligence score of:</br>14 (+2)</h3>
-                <p>Maybe stick to combat!</p>
+                <p>Now you're not just swinging wildly; you're strategizing!</p>
             </div>
             <div id="scoreSixteen" class="score-container">
                 <h3>You have an intelligence score of:</br>16 (+3)</h3>
-                <p>Maybe stick to combat!</p>
+                <p>Brains and brawn, you've got it all!</p>
             </div>
             <div id="scoreEighteen" class="score-container">
                 <h3>You have an intelligence score of:</br>18 (+4)</h3>
-                <p>Maybe stick to combat!</p>
+                <p>Impressive! You're becoming quite the scholar!</p>
+            </div>
+            <div id="scoreTwenty" class="score-container">
+                <h3>You had an intelligence score of:</br>20 (+5)</h3>
+                <p>Genius on the battlefield and in the library!</p>
             </div>
             <div id="scoreTwenty-six" class="score-container">
                 <h3>You have an intelligence score of:</br>26 (+8)</h3>
-                <p>Maybe stick to combat!</p>
+                <p>They say knowledge is power, and you've got it in spades!</p>
             </div>
         </div>
 
