@@ -1,9 +1,9 @@
 body {
     background-color: darkslategray;
+    font-family: 'Trebuchet MS', sans-serif;
 }
 
 h1 {
-    font-family: 'Trebuchet MS', sans-serif;
     /* text-align: center; */
     color:aliceblue;
     margin-top: 50px;
@@ -28,7 +28,6 @@ h1 {
 }
 
 .menu button {
-    font-family: 'Trebuchet MS', sans-serif;
     font-size: large;
     text-align: center;
     text-decoration: none;
@@ -62,7 +61,6 @@ h1 {
 .popup-content {
     position: relative;
     background-color:antiquewhite;
-    font-family: 'Trebuchet MS', sans-serif;
     font-size: large;
     text-align: center;
     color:darkslategray;
@@ -75,7 +73,6 @@ h1 {
 }
 
 .popup-content h2 {
-    font-family: 'Trebuchet MS', sans-serif;
     font-size: large;
     text-align: center;
     text-decoration: none;
@@ -111,6 +108,10 @@ h1 {
     width: 40px;
     height: auto;
 }
+#coffeelogo {
+    width: 30px;
+    height: auto;
+}
 
 ul, ol {
     margin: 0;
@@ -129,7 +130,6 @@ li {
 .container-wrapper {
     display: flex;
     text-align: center;
-    font-family: 'Trebuchet MS', sans-serif;
     flex-direction: column; /* Stack the containers vertically */
     align-items: center; 
     margin-top: 75px;
@@ -192,7 +192,6 @@ li {
     border: 1px solid rgb(209,213,219);
     border-radius: .5rem;
     color: #111827;
-    font-family: 'Trebuchet MS', sans-serif;
     font-size: .875rem;
     font-weight: 600;
     line-height: 1.25rem;
@@ -212,7 +211,6 @@ li {
 }
 
 #endgameContainer {
-    font-family: 'Trebuchet MS', sans-serif;
     text-align: center;
     color: darkslategray;
     margin-top: 0;
@@ -269,5 +267,45 @@ li {
     margin-right: 10px;
 }
 
-
-
+/* resizing */
+@media (max-width: 400px) {
+    h1 {
+        margin-top: 5%;
+        margin-left: 0; 
+        text-align: center; 
+    }
+    .container-wrapper {
+        margin-top: 20px; 
+    }
+    .menu {
+        padding: 20px;
+        display: flex;
+        padding: 5px 10px;
+        border-radius: 12px;
+        background-color: cadetblue;
+        align-items: center;
+        cursor: pointer;
+    }
+    .image-container{
+        position: absolute;
+        top: 15%;
+        width: 90%;
+        padding-bottom: 10px;
+    }
+    .deathSaves {
+        padding-right: 10px;
+    }
+    .spellGuesser {
+        position: relative;
+        top: 70%;
+        width: 80%; 
+        margin-top: 20%;
+        max-width: none; 
+    }
+    .inputContainer {
+        position: relative;
+        top: 70%;
+        width: 80%; 
+        max-width: none; 
+    }
+}

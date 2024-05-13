@@ -50,7 +50,6 @@ async function displayRandomQuestion() {
     await displaySpellDescription(questionData);
 }
 
-
 let remainingHearts = 3; // Initialize with the maximum number of hearts
 
 function updateHeartDisplay() {
@@ -65,8 +64,6 @@ function updateHeartDisplay() {
         }
     });
 }
-
-
 
 function checkGuess() {
     const guessInput = document.getElementById('guessInput');
@@ -117,10 +114,6 @@ function checkGuess() {
     }
 }
 
-
-
-
-
 function endGame(reason) {
     // console.log('Right count: ', right);
 
@@ -160,11 +153,6 @@ function endGame(reason) {
     }
 }
 
-
-
-
-
-
 // Listen for click event on the Skip button
 document.getElementById('skipButton').addEventListener('click', function() {
     if (!gameEnded) {
@@ -181,7 +169,6 @@ document.getElementById('skipButton').addEventListener('click', function() {
         }, 1500); 
     }
 });
-
 
 function moveToNextQuestion() {
     // Hide the "Correct!" message
@@ -204,7 +191,6 @@ function moveToNextQuestion() {
     displayRandomQuestion();
 }
 
-
 // Listen for "keypress" event on the input element
 document.getElementById('guessInput').addEventListener('keypress', function(event) {
     // Check if Enter key is pressed
@@ -219,7 +205,6 @@ document.addEventListener('DOMContentLoaded', function() {
     displayRandomQuestion();
     updateHeartDisplay();
 });
-
 
 // BUTTONS
 var aboutBtn = document.getElementById("aboutBtn");
