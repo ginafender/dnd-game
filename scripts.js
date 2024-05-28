@@ -38,19 +38,18 @@ async function displayRandomQuestion() {
     let questionData;
     let questionAlreadyAsked = true;
 
-    // Keep fetching random questions until finding one that hasn't been asked before
     while (questionAlreadyAsked) {
         questionData = await fetchRandomSpell();
         if (!askedQuestions.includes(questionData.name)) {
             questionAlreadyAsked = false;
-            askedQuestions.push(questionData.name); // Add the question to the list of asked questions
+            askedQuestions.push(questionData.name);
         }
     }
 
     await displaySpellDescription(questionData);
 }
 
-let remainingHearts = 3; // Initialize with the maximum number of hearts
+let remainingHearts = 3;
 function updateHeartDisplay() {
     const heartImages = document.querySelectorAll('#heart1, #heart2, #heart3');
     heartImages.forEach((image, index) => {
@@ -81,31 +80,28 @@ function checkGuess() {
         correctMessage.style.display = 'block';
         // console.log('Correct count: ', correctGuesses);
         setTimeout(() => {
-            moveToNextQuestion(); //delay before next question
+            moveToNextQuestion();
         }, 1500); 
         
-        // If the player has at least 1 heart, continue playing
         if (remainingHearts < 3) {
-            remainingHearts++; // Increment the remaining hearts count
-            // Update the display of heart images
+            remainingHearts++;
             correctGuesses = 0;
-            updateHeartDisplay(); // Update heart display
+            updateHeartDisplay(); 
         }
     } else {
         incorrectGuesses++;
         correctGuesses = 0;
         wrong++;
         // console.log('Wrong count: ', incorrectGuesses);
-        guessInput.classList.add('flash-jiggle'); // Add class to trigger flash and jiggle animations
+        guessInput.classList.add('flash-jiggle')
         setTimeout(() => {
-            guessInput.classList.remove('flash-jiggle'); // Remove class after animation completes
+            guessInput.classList.remove('flash-jiggle'); 
         }, 500); 
 
-        // If the player has at least 1 heart, then remove one heart
         if (remainingHearts > 0) {
             remainingHearts--;
             // console.log('Updated remainingHearts:', remainingHearts);
-            updateHeartDisplay(); // Update heart display
+            updateHeartDisplay();
         }
 
         if (remainingHearts === 0 ) {
@@ -136,8 +132,6 @@ function endGame(reason) {
             document.getElementById('scoreTwenty-six').style.display = 'block';
         }
     }
-
-    // Show the intelligence score message corresponding to the number of wrong guesses
     if (right === 9) {
         document.getElementById('scoreTwenty').style.display = 'block';
     } else if (right === 8) {
@@ -153,15 +147,12 @@ function endGame(reason) {
     }
 }
 
-// Get the skip button element
-const skipButton = document.getElementById('skipButton');
 
-// Listen for click event on the Skip button
+const skipButton = document.getElementById('skipButton');
 skipButton.addEventListener('click', function() {
     if (!gameEnded) {
         skips++;
         checkGuess(); 
-        // Display correct answer before moving on
         const displayAnswer = document.getElementById('displayAnswer');
         const correctAnswer = localStorage.getItem('correctAnswer');
         displayAnswer.innerText = correctAnswer;
@@ -171,9 +162,7 @@ skipButton.addEventListener('click', function() {
         skipButton.disabled = true;
 
         setTimeout(() => {
-            moveToNextQuestion(); // Delay before next question
-
-            // Re-enable the skip button after 1 second
+            moveToNextQuestion(); 
             skipButton.disabled = false;
         }, 1500);
     }
@@ -181,30 +170,23 @@ skipButton.addEventListener('click', function() {
 
 
 function moveToNextQuestion() {
-    // Hide the "Correct!" message
     const correctMessage = document.querySelector('.spellGuesser h3');
     correctMessage.style.display = 'none';
 
-    // Clear the input field
     const guessInput = document.getElementById('guessInput');
     guessInput.value = ''; 
 
-    // Clear any previous question descriptions
     const spellDescription = document.getElementById('spellDescription');
     spellDescription.innerText = '';
     spellDescription.style.display = 'block';
 
-    // Clear previous correct answer display
     document.getElementById('displayAnswer').style.display = 'none';
 
-    // Display a random question from the next question type
     displayRandomQuestion();
 
-    // Set focus on the input field
     guessInput.focus();
 }
 
-// Ensure the input field is focused when the page loads
 document.addEventListener('DOMContentLoaded', function() {
     // console.log('Max Questions:', maxQuestions); 
     displayRandomQuestion();
@@ -212,9 +194,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('guessInput').focus();
 });
 
-
-
-// Call displayRandomQuestion when the page loads
 document.addEventListener('DOMContentLoaded', function() {
     // console.log('Max Questions:', maxQuestions); 
     displayRandomQuestion();
@@ -239,10 +218,6 @@ function togglePopup(popup) {
 aboutBtn.addEventListener("click", function() {
     togglePopup(aboutPopup);
 });
-
-// settingsBtn.addEventListener("click", function() {
-//     togglePopup(settingsPopup);
-// });
 
 htpBtn.addEventListener("click", function() {
     togglePopup(htpPopup);

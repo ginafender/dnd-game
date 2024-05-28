@@ -93,20 +93,12 @@ h1 {
     display: block;
 }
 
-#xlogo {
+#xlogo, #patreonlogo, #beaconslogo {
     width: 40px;
     height: auto;
 }
 #discordlogo {
     width: 50px;
-    height: auto;
-}
-#patreonlogo {
-    width: 40px;
-    height: auto;
-}
-#beaconslogo {
-    width: 40px;
     height: auto;
 }
 #coffeelogo {
@@ -117,16 +109,12 @@ h1 {
 ul, ol {
     margin: 0;
     padding: 0;
-}
-
-ul, ol {
     list-style-position: inside;
 }
 
 li {
     padding: 5px 0;
 }
-
 
 .container-wrapper {
     display: flex;
@@ -252,27 +240,27 @@ li {
     transform: translate(-50%, -50%);
     display: flex;
     align-items: flex-end; 
-    justify-content: space-between;
 }
 
 .deathSaves {
+    display: flex; 
     align-items: center;
-    margin-left: auto;
-    margin-bottom: 0;
-    padding-right: 5px;
-    width: 250px;
+    margin: 0 auto; 
+    width: 100%; 
+    max-width: 400px; 
+    padding-right: 10px;
 }
+
 
 #heart1, #heart2, #heart3 {
     width: 30px;
     height: 25px;
-    margin-bottom: 0;
-    margin-right: 10px;
+    padding-right: 5px;
     visibility: visible;
 }
 
 /* resizing */
-@media (max-width: 400px) {
+@media (max-width: 500px) {
     h1 {
         margin-top: 10%;
         margin-left: 0px;
@@ -280,8 +268,8 @@ li {
     }
     .menu {
         top: 5%;
-        right: 0;
-        left: 0;
+        right: 20px;
+        left: 20px;
         margin-left: 10px;
         margin-right: 10px;
         padding: 10px;
@@ -292,6 +280,9 @@ li {
         justify-content: center;
     }
     .image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center; 
         position: relative;
         margin-top: 30%;
         margin-bottom: 0;
@@ -299,6 +290,12 @@ li {
     .deathSaves {
         margin: 0;
         position: relative;
+        padding: 0;
+        text-align: center;
+        max-width: 250px;
+    }
+    .deathSaves h3 {
+        text-align: center;
     }
     .container-wrapper {
         display: flex;
@@ -329,4 +326,70 @@ li {
     
 }
 
+
+/* @media (max-width: 700px) {
+    h1 {
+        margin-top: 10%;
+        margin-left: 0px;
+        text-align: center;
+    }
+    .menu {
+        top: 5%;
+        right: 20px;
+        left: 20px;
+        margin-left: 10px;
+        margin-right: 10px;
+        padding: 10px;
+        display: flex;
+        border-radius: 12px;
+        background-color: cadetblue;
+        align-items: center;
+        justify-content: center;
+    }
+    .image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center; 
+        position: relative;
+        margin-top: 30%;
+        margin-bottom: 0;
+    }
+    .deathSaves {
+        margin: 0;
+        position: relative;
+        padding: 0;
+        text-align: center;
+        max-width: 250px;
+    }
+    .deathSaves h3 {
+        text-align: center;
+    }
+    .container-wrapper {
+        display: flex;
+        text-align: center;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 0;
+    }
+    .spellGuesser {
+        position: relative;
+        width: 80%;
+        margin-top: 0;
+        max-width: none;
+    }
+    .inputContainer {
+        position: relative;
+        top: 0;
+        width: 80%;
+        max-width: none;
+    }
+    #endgameContainer {
+        margin-top: 0;
+        margin-bottom: 0;
+        display: none;
+        top: 60%;
+        left: 50%; 
+    }
+    
+} */
 
