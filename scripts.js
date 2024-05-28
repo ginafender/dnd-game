@@ -51,19 +51,19 @@ async function displayRandomQuestion() {
 }
 
 let remainingHearts = 3; // Initialize with the maximum number of hearts
-
 function updateHeartDisplay() {
     const heartImages = document.querySelectorAll('#heart1, #heart2, #heart3');
     heartImages.forEach((image, index) => {
         if (index < remainingHearts) {
-            image.style.display = 'block'; 
+            image.style.visibility = 'visible'; 
             // console.log(`Heart ${index + 1} displayed`);
         } else {
-            image.style.display = 'none'; 
+            image.style.visibility = 'hidden'; 
             // console.log(`Heart ${index + 1} hidden`);
         }
     });
 }
+
 
 function checkGuess() {
     const guessInput = document.getElementById('guessInput');
@@ -153,22 +153,32 @@ function endGame(reason) {
     }
 }
 
+// Get the skip button element
+const skipButton = document.getElementById('skipButton');
+
 // Listen for click event on the Skip button
-document.getElementById('skipButton').addEventListener('click', function() {
+skipButton.addEventListener('click', function() {
     if (!gameEnded) {
-        skips++
+        skips++;
         checkGuess(); 
-        // display correct answer before moving on
+        // Display correct answer before moving on
         const displayAnswer = document.getElementById('displayAnswer');
         const correctAnswer = localStorage.getItem('correctAnswer');
         displayAnswer.innerText = correctAnswer;
         displayAnswer.style.display = 'block';
 
+        // Disable the skip button
+        skipButton.disabled = true;
+
         setTimeout(() => {
-            moveToNextQuestion(); //delay before next question
-        }, 1500); 
+            moveToNextQuestion(); // Delay before next question
+
+            // Re-enable the skip button after 1 second
+            skipButton.disabled = false;
+        }, 1500);
     }
 });
+
 
 function moveToNextQuestion() {
     // Hide the "Correct!" message
@@ -184,20 +194,25 @@ function moveToNextQuestion() {
     spellDescription.innerText = '';
     spellDescription.style.display = 'block';
 
-    //clear previous correct answer display
+    // Clear previous correct answer display
     document.getElementById('displayAnswer').style.display = 'none';
 
     // Display a random question from the next question type
     displayRandomQuestion();
+
+    // Set focus on the input field
+    guessInput.focus();
 }
 
-// Listen for "keypress" event on the input element
-document.getElementById('guessInput').addEventListener('keypress', function(event) {
-    // Check if Enter key is pressed
-    if (event.key === 'Enter' && this.value.trim() !== '') {
-        checkGuess(); 
-    }
+// Ensure the input field is focused when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // console.log('Max Questions:', maxQuestions); 
+    displayRandomQuestion();
+    updateHeartDisplay();
+    document.getElementById('guessInput').focus();
 });
+
+
 
 // Call displayRandomQuestion when the page loads
 document.addEventListener('DOMContentLoaded', function() {
