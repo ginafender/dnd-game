@@ -77,7 +77,7 @@ function checkGuess() {
         setTimeout(() => {
             guessInput.classList.remove('flash-jiggleGreen');
             moveToNextQuestion();
-        }, 1000);
+        }, 2000);
 
         if (remainingHearts < 3) {
             remainingHearts++;
@@ -95,7 +95,7 @@ function checkGuess() {
 
         setTimeout(() => {
             guessInput.classList.remove('flash-jiggleRed');
-        }, 1000);
+        }, 2000);
 
         if (remainingHearts === 0) {
             endGame('outOfHearts');
@@ -111,7 +111,7 @@ function endGame(reason) {
         document.querySelector('.spellGuesser h2').style.display = 'none';
         document.getElementById('spellDescription').style.display = 'none';
         document.getElementById('endgameContainer').style.display = 'block';
-    }, 1000);
+    }, 2000);
 
 
     console.log('Reason for game ending: ', reason);
@@ -151,7 +151,7 @@ skipButton.addEventListener('click', function() {
         setTimeout(() => {
             moveToNextQuestion();
             skipButton.disabled = false;
-        }, 1500);
+        }, 2000);
     }
 });
 
