@@ -164,21 +164,20 @@ li {
 }
 
 #guessInput {
-    width: 300px;
+    width: 800px;
     height: 25px;
     padding: 8px;
     border: 5px solid #ccc;
     border-radius: 10px;
-    display: inline-block;
 }
 
 #guessInput:focus{
     outline: none;
 }
 
-#skipButton {
+#skipButton, #guessButton {
     background-color: #FFFFFF;
-    border: 1px solid rgb(209,213,219);
+    border: 3px solid rgb(209,213,219);
     border-radius: .5rem;
     color: #111827;
     font-size: .875rem;
@@ -190,7 +189,7 @@ li {
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-#skipButton:hover {
+#skipButton:hover, #guessButton:hover {
     color:blueviolet;
     border: 1px solid rgb(209,213,219);
     border-radius: .5rem;
@@ -198,6 +197,7 @@ li {
     align-items: center;
     cursor: pointer;
 }
+
 
 #endgameContainer {
     text-align: center;
@@ -221,14 +221,24 @@ li {
     display: none;
 }
 
-@keyframes flashJiggleInput {
+@keyframes flashJiggleInputRed {
     0%, 100% { border-color: burlywood; transform: translateX(0); }
     25%, 75% { border-color: red; }
     50% { transform: translateX(-2px); }
 }
 
-.flash-jiggle {
-    animation: flashJiggleInput 0.5s ease-in-out 4, jiggleInput 0.5s ease-in-out 3 alternate;
+.flash-jiggleRed {
+    animation: flashJiggleInputRed 0.5s ease-in-out 4, jiggleInput 0.5s ease-in-out 3 alternate;
+}
+
+@keyframes flashJiggleInputGreen {
+    0%, 100% { border-color: burlywood; transform: translateX(0); }
+    25%, 75% { border-color: green; }
+    50% { transform: translateX(-2px); }
+}
+
+.flash-jiggleGreen {
+    animation: flashJiggleInputGreen 0.5s ease-in-out 4, jiggleInput 0.5s ease-in-out 3 alternate;
 }
 
 .image-container{

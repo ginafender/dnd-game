@@ -23,7 +23,7 @@ async function displaySpellDescription(spellData) {
     localStorage.setItem('correctAnswer', spellData.name);
 
     // console.log('Data: ', spellDescription);
-    // console.log('Correct answer: ', spellData.name);
+    console.log('Correct answer: ', spellData.name);
 }
 
 async function displayRandomQuestion() {
@@ -69,45 +69,39 @@ function checkGuess() {
     const guess = guessInput.value.trim().toLowerCase().replace(/'/g, ''); 
     const correctAnswer = localStorage.getItem('correctAnswer').toLowerCase().replace(/'/g, '').trim();
     const correctMessage = document.getElementById('correctMessage');
-
-    // console.log('Guess:', guess);
-    // console.log('Correct Answer:', correctAnswer);
-    // console.log('Remaining Hearts: ', remainingHearts);
+    const displayAnswer = document.getElementById('displayAnswer');
 
     if (guess === correctAnswer) {
         correctGuesses++;
-        right++
+        right++;
         correctMessage.style.display = 'block';
-        // console.log('Correct count: ', correctGuesses);
-        setTimeout(() => {
-            moveToNextQuestion();
-        }, 1500); 
-        
+        guessInput.classList.add('flash-jiggleGreen');
         if (remainingHearts < 3) {
             remainingHearts++;
-            correctGuesses = 0;
-            updateHeartDisplay(); 
+            updateHeartDisplay();
         }
     } else {
         incorrectGuesses++;
-        correctGuesses = 0;
         wrong++;
-        // console.log('Wrong count: ', incorrectGuesses);
-        guessInput.classList.add('flash-jiggle')
-        setTimeout(() => {
-            guessInput.classList.remove('flash-jiggle'); 
-        }, 500); 
+        guessInput.classList.add('flash-jiggleRed');
+        displayAnswer.innerText = localStorage.getItem('correctAnswer');
+        displayAnswer.style.display = 'block';
 
         if (remainingHearts > 0) {
             remainingHearts--;
-            // console.log('Updated remainingHearts:', remainingHearts);
             updateHeartDisplay();
         }
 
-        if (remainingHearts === 0 ) {
+        if (remainingHearts === 0) {
             endGame('outOfHearts');
         }
     }
+
+    setTimeout(() => {
+        guessInput.classList.remove('flash-jiggleGreen');
+        guessInput.classList.remove('flash-jiggleRed');
+        moveToNextQuestion();
+    }, 1000);
 }
 
 function endGame(reason) {
@@ -118,7 +112,7 @@ function endGame(reason) {
         document.querySelector('.spellGuesser h2').style.display = 'none';
         document.getElementById('spellDescription').style.display = 'none';
         document.getElementById('endgameContainer').style.display = 'block';
-    }, 1500);
+    }, 1000);
 
 
     console.log('Reason for game ending: ', reason);
@@ -152,21 +146,27 @@ const skipButton = document.getElementById('skipButton');
 skipButton.addEventListener('click', function() {
     if (!gameEnded) {
         skips++;
-        checkGuess(); 
-        const displayAnswer = document.getElementById('displayAnswer');
-        const correctAnswer = localStorage.getItem('correctAnswer');
-        displayAnswer.innerText = correctAnswer;
-        displayAnswer.style.display = 'block';
-
-        // Disable the skip button
+        checkGuess();
         skipButton.disabled = true;
-
         setTimeout(() => {
-            moveToNextQuestion(); 
+            moveToNextQuestion();
             skipButton.disabled = false;
         }, 1500);
     }
 });
+
+const guessButton = document.getElementById('guessButton');
+guessButton.addEventListener('click', function() {
+    if (!gameEnded) {
+        guessButton.disabled = true;
+        checkGuess();
+        setTimeout(() => {
+            guessButton.disabled = false;
+        }, 1500);
+    }
+});
+
+
 
 
 function moveToNextQuestion() {
@@ -192,12 +192,6 @@ document.addEventListener('DOMContentLoaded', function() {
     displayRandomQuestion();
     updateHeartDisplay();
     document.getElementById('guessInput').focus();
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    // console.log('Max Questions:', maxQuestions); 
-    displayRandomQuestion();
-    updateHeartDisplay();
 });
 
 // BUTTONS
