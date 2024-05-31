@@ -23,7 +23,7 @@ async function displaySpellDescription(spellData) {
     localStorage.setItem('correctAnswer', spellData.name);
 
     // console.log('Data: ', spellDescription);
-    console.log('Correct answer: ', spellData.name);
+    // console.log('Correct answer: ', spellData.name);
 }
 
 async function displayRandomQuestion() {
