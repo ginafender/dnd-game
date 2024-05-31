@@ -119,7 +119,7 @@ li {
 .container-wrapper {
     display: flex;
     text-align: center;
-    flex-direction: column; /* Stack the containers vertically */
+    flex-direction: column; 
     align-items: center; 
     margin-top: 75px;
 }
