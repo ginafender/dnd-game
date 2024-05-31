@@ -164,6 +164,7 @@ li {
 }
 
 #guessInput {
+    font-size: 16px;
     width: 800px;
     height: 25px;
     padding: 8px;
@@ -191,7 +192,7 @@ li {
 
 #skipButton:hover, #guessButton:hover {
     color:blueviolet;
-    border: 1px solid rgb(209,213,219);
+    border: 3px solid rgb(209,213,219);
     border-radius: .5rem;
     background-color: cadetblue;
     align-items: center;

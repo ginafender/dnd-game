@@ -68,14 +68,17 @@ function checkGuess() {
     const guessInput = document.getElementById('guessInput');
     const guess = guessInput.value.trim().toLowerCase().replace(/'/g, ''); 
     const correctAnswer = localStorage.getItem('correctAnswer').toLowerCase().replace(/'/g, '').trim();
-    const correctMessage = document.getElementById('correctMessage');
-    const displayAnswer = document.getElementById('displayAnswer');
 
     if (guess === correctAnswer) {
         correctGuesses++;
         right++;
-        correctMessage.style.display = 'block';
+        showCorrectAnswer();
         guessInput.classList.add('flash-jiggleGreen');
+        setTimeout(() => {
+            guessInput.classList.remove('flash-jiggleGreen');
+            moveToNextQuestion();
+        }, 1000);
+
         if (remainingHearts < 3) {
             remainingHearts++;
             updateHeartDisplay();
@@ -84,24 +87,20 @@ function checkGuess() {
         incorrectGuesses++;
         wrong++;
         guessInput.classList.add('flash-jiggleRed');
-        displayAnswer.innerText = localStorage.getItem('correctAnswer');
-        displayAnswer.style.display = 'block';
 
         if (remainingHearts > 0) {
             remainingHearts--;
             updateHeartDisplay();
         }
 
+        setTimeout(() => {
+            guessInput.classList.remove('flash-jiggleRed');
+        }, 1000);
+
         if (remainingHearts === 0) {
             endGame('outOfHearts');
         }
     }
-
-    setTimeout(() => {
-        guessInput.classList.remove('flash-jiggleGreen');
-        guessInput.classList.remove('flash-jiggleRed');
-        moveToNextQuestion();
-    }, 1000);
 }
 
 function endGame(reason) {
@@ -147,6 +146,7 @@ skipButton.addEventListener('click', function() {
     if (!gameEnded) {
         skips++;
         checkGuess();
+        showCorrectAnswer();
         skipButton.disabled = true;
         setTimeout(() => {
             moveToNextQuestion();
@@ -158,15 +158,16 @@ skipButton.addEventListener('click', function() {
 const guessButton = document.getElementById('guessButton');
 guessButton.addEventListener('click', function() {
     if (!gameEnded) {
-        guessButton.disabled = true;
         checkGuess();
-        setTimeout(() => {
-            guessButton.disabled = false;
-        }, 1500);
     }
 });
 
-
+function showCorrectAnswer() {
+    const displayAnswer = document.getElementById('displayAnswer');
+    const correctAnswer = localStorage.getItem('correctAnswer');
+    displayAnswer.innerText = correctAnswer;
+    displayAnswer.style.display = 'block';
+}
 
 
 function moveToNextQuestion() {
