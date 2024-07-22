@@ -21,9 +21,7 @@ async function displaySpellDescription(spellData) {
     const spellDescription = spellData.desc[0];
     document.getElementById('spellDescription').innerText = spellDescription;
     localStorage.setItem('correctAnswer', spellData.name);
-
-    // console.log('Data: ', spellDescription);
-    console.log('Correct answer: ', spellData.name);
+    // console.log('Correct answer: ', spellData.name);
 }
 
 async function displayRandomQuestion() {
@@ -110,12 +108,12 @@ function endGame(reason) {
         document.getElementById('spellDescription').style.display = 'none';
         document.getElementById('endgameContainer').style.display = 'block';
 
-        console.log('Reason for game ending: ', reason);
+        // console.log('Reason for game ending: ', reason);
         if (reason === 'outOfHearts') {
             document.getElementById('died').style.display = 'block';
             document.getElementById('scoreNine').style.display = 'block'; 
         } else {
-            console.log('Displaying maxQuestions message');
+            // console.log('Displaying maxQuestions message');
             document.getElementById('maxq').style.display = 'block';
             if (right === 10) {
                 document.getElementById('scoreTwenty-six').style.display = 'block';
@@ -135,43 +133,29 @@ function endGame(reason) {
             document.getElementById('scoreTen').style.display = 'block';
         }
 
-        // Display the play button after all scores are shown
         document.getElementById('playAgain').style.display = 'block';
     }, 2000);
 }
 
-
 function playAgain() {
     const playButton = document.getElementById('playAgain');
-    playButton.style.display = 'block';
-    playButton.addEventListener('click', function() {
-        playButton.style.display = 'none';
-        correctGuesses = 0;
-        incorrectGuesses = 0;
-        right = 0;
-        wrong = 0;
-        skips = 0;
-        totalQuestions = 0;
-        remainingHearts = 3;
-        askedQuestions = [];
-        gameEnded = false;
+    playButton.disabled = true;
 
-        updateHeartDisplay(); 
-        displayRandomQuestion();
-        document.querySelector('.spellGuesser h2').style.display = 'block';
-        document.getElementById('spellDescription').style.display = 'block';
-        document.getElementById('endgameContainer').style.display = 'none';
-        document.getElementById('died').style.display = 'none';
-        document.getElementById('maxq').style.display = 'none';
-        document.getElementById('scoreNine').style.display = 'none';
-        document.getElementById('scoreTwenty-six').style.display = 'none';
-        document.getElementById('scoreTwenty').style.display = 'none';
-        document.getElementById('scoreEighteen').style.display = 'none';
-        document.getElementById('scoreSixteen').style.display = 'none';
-        document.getElementById('scoreFourteen').style.display = 'none';
-        document.getElementById('scoreTwelve').style.display = 'none';
-        document.getElementById('scoreTen').style.display = 'none';
-    });
+    setTimeout(() => {
+        playButton.disabled = false; 
+    }, 500);
+
+    playButton.removeEventListener('click', playAgainHandler); 
+    playButton.addEventListener('click', playAgainHandler); 
+}
+
+function playAgainHandler() {
+    const playButton = document.getElementById('playAgain');
+    playButton.style.display = 'none';
+
+    setTimeout(() => {
+        location.reload();
+    }, 1000);
 }
 
 
@@ -203,7 +187,6 @@ function showCorrectAnswer() {
     displayAnswer.style.display = 'block';
 }
 
-
 function moveToNextQuestion() {
     const correctMessage = document.querySelector('.spellGuesser h3');
     correctMessage.style.display = 'none';
@@ -216,19 +199,15 @@ function moveToNextQuestion() {
     spellDescription.style.display = 'block';
 
     document.getElementById('displayAnswer').style.display = 'none';
-
     displayRandomQuestion();
-
     guessInput.focus();
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // console.log('Max Questions:', maxQuestions); 
     playAgain();
     displayRandomQuestion();
     updateHeartDisplay();
     document.getElementById('guessInput').focus();
-    document.getElementById('playAgain').style.display = 'none';
 });
 
 // BUTTONS
