@@ -133,8 +133,9 @@ li {
     text-align: center;
     width: 400px;
     min-height: 400px;
-    display: block;
+    display: flex;
     margin-bottom: 20px; 
+    flex-direction: column; 
     position: relative;
     z-index: 0;
     box-sizing: border-box; 
@@ -179,7 +180,7 @@ li {
     outline: none;
 }
 
-#skipButton, #guessButton {
+#skipButton, #guessButton, #playAgain {
     background-color: #FFFFFF;
     border: 3px solid rgb(209,213,219);
     border-radius: .5rem;
@@ -193,7 +194,13 @@ li {
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-#skipButton:hover, #guessButton:hover {
+#playAgain {
+    display: none;
+    align-self: center;
+    margin-top: auto;
+}
+
+#skipButton:hover, #guessButton:hover, #playAgain:hover {
     color:blueviolet;
     border: 3px solid rgb(209,213,219);
     border-radius: .5rem;
@@ -276,11 +283,13 @@ li {
 /* resizing */
 @media (max-width: 350px) {
     h1 {
+        font-size: 1.5rem;
         margin-top: 10%;
         margin-left: 0px;
         text-align: center;
     }
     .menu {
+        font-size: 1.5rem;
         top: 3%;
         right: 20px;
         left: 20px;
@@ -320,22 +329,26 @@ li {
     }
     .spellGuesser {
         position: relative;
-        width: 80%;
+        width: 90%;
         margin-top: 0;
         max-width: none;
     }
     .inputContainer {
         position: relative;
         top: 0;
-        width: 80%;
+        width: 90%;
         max-width: none;
     }
     #endgameContainer {
         margin-top: 0;
         margin-bottom: 0;
         display: none;
-        top: 60%;
+        top: 40%;
         left: 50%; 
+    }
+    #guessInput {
+        font-size: 0.8rem;
+        width: 60%;
     }
     
 }
@@ -401,7 +414,7 @@ li {
         margin-top: 0;
         margin-bottom: 0;
         display: none;
-        top: 60%;
+        top: 40%;
         left: 50%; 
     }
     
@@ -467,7 +480,7 @@ li {
         margin-top: 0;
         margin-bottom: 0;
         display: none;
-        top: 60%;
+        top: 40%;
         left: 50%; 
     }
     
