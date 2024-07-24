@@ -7,6 +7,7 @@ let totalQuestions = 0;
 let maxQuestions = 11;
 let askedQuestions = [];
 let gameEnded = false;
+let skipped = false;
 
 async function fetchRandomSpell() {
     const response = await fetch('https://www.dnd5eapi.co/api/spells');
@@ -80,6 +81,15 @@ function checkGuess() {
             remainingHearts++;
             updateHeartDisplay();
         }
+    } else if (skipped) {
+        incorrectGuesses++;
+        wrong++;
+        guessInput.classList.add('flash-jiggleRed');
+
+        setTimeout(() => {
+            guessInput.classList.remove('flash-jiggleRed');
+        }, 2000);
+
     } else {
         incorrectGuesses++;
         wrong++;
@@ -119,18 +129,28 @@ function endGame(reason) {
                 document.getElementById('scoreTwenty-six').style.display = 'block';
             }
         }
-        if (right === 9) {
-            document.getElementById('scoreTwenty').style.display = 'block';
+        if (right === 10) {
+            document.getElementById('scoreTwenty-Eight').style.display = 'block';
+        } else if (right === 9) {
+            document.getElementById('scoreTwenty-Six').style.display = 'block';
         } else if (right === 8) {
-            document.getElementById('scoreEighteen').style.display = 'block';
+            document.getElementById('scoreTwenty-Four').style.display = 'block';
         } else if (right === 7) {
-            document.getElementById('scoreSixteen').style.display = 'block';
+            document.getElementById('scoreTwenty-Two').style.display = 'block';
         } else if (right === 6) {
-            document.getElementById('scoreFourteen').style.display = 'block';
+            document.getElementById('scoreTwenty').style.display = 'block';
         } else if (right === 5) {
-            document.getElementById('scoreTwelve').style.display = 'block';
+            document.getElementById('scoreEighteen').style.display = 'block';
         } else if (right === 4) {
+            document.getElementById('scoreSixteen').style.display = 'block';
+        } else if (right === 3) {
+            document.getElementById('scoreFourteen').style.display = 'block';
+        } else if (right === 2) {
+            document.getElementById('scoreTwelve').style.display = 'block';
+        } else if (right === 1) {
             document.getElementById('scoreTen').style.display = 'block';
+        } else if (right === 0) {
+            document.getElementById('scoreNine').style.display = 'block';
         }
 
         document.getElementById('playAgain').style.display = 'block';
@@ -162,6 +182,7 @@ function playAgainHandler() {
 const skipButton = document.getElementById('skipButton');
 skipButton.addEventListener('click', function() {
     if (!gameEnded) {
+        skipped = true;
         skips++;
         checkGuess();
         showCorrectAnswer();
