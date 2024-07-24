@@ -8,7 +8,6 @@ h1 {
     color:aliceblue;
     margin-top: 50px;
     margin-left: 100px;
-    /* text-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
 }
 
 .menu {
@@ -221,6 +220,7 @@ li {
     left: 50%; 
     transform: translate(-50%, -50%); 
     z-index: 1; 
+    box-sizing: border-box;
 }
 
 #died, #maxq {
@@ -329,7 +329,7 @@ li {
     }
     .spellGuesser {
         position: relative;
-        width: 90%;
+        max-width: 90%;
         margin-top: 0;
         max-width: none;
     }
@@ -348,7 +348,7 @@ li {
     }
     #guessInput {
         font-size: 0.8rem;
-        width: 60%;
+        max-width: 60%;
     }
     
 }
@@ -400,14 +400,14 @@ li {
     }
     .spellGuesser {
         position: relative;
-        width: 80%;
+        max-width: 80%;
         margin-top: 0;
         max-width: none;
     }
     .inputContainer {
         position: relative;
         top: 0;
-        width: 80%;
+        max-width: 80%;
         max-width: none;
     }
     #endgameContainer {
@@ -466,14 +466,14 @@ li {
     }
     .spellGuesser {
         position: relative;
-        width: 80%;
+        max-width: 80%;
         margin-top: 0;
         max-width: none;
     }
     .inputContainer {
         position: relative;
         top: 0;
-        width: 80%;
+        max-width: 80%;
         max-width: none;
     }
     #endgameContainer {
@@ -533,21 +533,21 @@ li {
     }
     .spellGuesser {
         position: relative;
-        width: 80%;
+        max-width: 80%;
         margin-top: 0;
         max-width: none;
     }
     .inputContainer {
         position: relative;
         top: 0;
-        width: 80%;
+        max-width: 80%;
         max-width: none;
     }
     #endgameContainer {
         margin-top: 0;
         margin-bottom: 0;
         display: none;
-        top: 45%;
+        top: 40%;
         left: 50%; 
     }
     

@@ -114,48 +114,63 @@ function endGame(reason) {
     gameEnded = true;
 
     setTimeout(() => {
+        // Hide game elements
         document.querySelector('.spellGuesser h2').style.display = 'none';
         document.getElementById('spellDescription').style.display = 'none';
+
+        // Show end game container
         document.getElementById('endgameContainer').style.display = 'block';
 
-        // console.log('Reason for game ending: ', reason);
+        // Display reason for game ending
         if (reason === 'outOfHearts') {
             document.getElementById('died').style.display = 'block';
-            document.getElementById('scoreNine').style.display = 'block'; 
         } else {
-            // console.log('Displaying maxQuestions message');
             document.getElementById('maxq').style.display = 'block';
-            if (right === 10) {
-                document.getElementById('scoreTwenty-six').style.display = 'block';
-            }
-        }
-        if (right === 10) {
-            document.getElementById('scoreTwenty-Eight').style.display = 'block';
-        } else if (right === 9) {
-            document.getElementById('scoreTwenty-Six').style.display = 'block';
-        } else if (right === 8) {
-            document.getElementById('scoreTwenty-Four').style.display = 'block';
-        } else if (right === 7) {
-            document.getElementById('scoreTwenty-Two').style.display = 'block';
-        } else if (right === 6) {
-            document.getElementById('scoreTwenty').style.display = 'block';
-        } else if (right === 5) {
-            document.getElementById('scoreEighteen').style.display = 'block';
-        } else if (right === 4) {
-            document.getElementById('scoreSixteen').style.display = 'block';
-        } else if (right === 3) {
-            document.getElementById('scoreFourteen').style.display = 'block';
-        } else if (right === 2) {
-            document.getElementById('scoreTwelve').style.display = 'block';
-        } else if (right === 1) {
-            document.getElementById('scoreTen').style.display = 'block';
-        } else if (right === 0) {
-            document.getElementById('scoreNine').style.display = 'block';
         }
 
+        // Display score message based on the number of correct answers
+        switch (right) {
+            case 10:
+                document.getElementById('scoreTwenty-Eight').style.display = 'block';
+                break;
+            case 9:
+                document.getElementById('scoreTwenty-Six').style.display = 'block';
+                break;
+            case 8:
+                document.getElementById('scoreTwenty-Four').style.display = 'block';
+                break;
+            case 7:
+                document.getElementById('scoreTwenty-Two').style.display = 'block';
+                break;
+            case 6:
+                document.getElementById('scoreTwenty').style.display = 'block';
+                break;
+            case 5:
+                document.getElementById('scoreEighteen').style.display = 'block';
+                break;
+            case 4:
+                document.getElementById('scoreSixteen').style.display = 'block';
+                break;
+            case 3:
+                document.getElementById('scoreFourteen').style.display = 'block';
+                break;
+            case 2:
+                document.getElementById('scoreTwelve').style.display = 'block';
+                break;
+            case 1:
+                document.getElementById('scoreTen').style.display = 'block';
+                break;
+            case 0:
+                document.getElementById('scoreNine').style.display = 'block';
+                break;
+            default:
+                console.log('Unexpected score value');
+        }
+        // Show play again button
         document.getElementById('playAgain').style.display = 'block';
     }, 2000);
 }
+
 
 function playAgain() {
     const playButton = document.getElementById('playAgain');
@@ -190,6 +205,7 @@ skipButton.addEventListener('click', function() {
         setTimeout(() => {
             moveToNextQuestion();
             skipButton.disabled = false;
+            skipped = false;
         }, 2000);
     }
 });
@@ -198,6 +214,10 @@ const guessButton = document.getElementById('guessButton');
 guessButton.addEventListener('click', function() {
     if (!gameEnded) {
         checkGuess();
+        guessButton.disabled = true;
+        setTimeout(() => {
+            guessButton.disabled = false;
+        }, 2000);
     }
 });
 
